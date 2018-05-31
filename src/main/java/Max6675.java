@@ -11,16 +11,16 @@ public class Max6675 {
         System.out.println("Starting Thermocouple Application.");
         spi = new SPI();
         while (true) {
-            System.out.println(getConversionValue()); //Print out red ADC Sample Counts
+            System.out.println(getConversionValue());
             Thread.sleep(2000);
         }
     }
 
     private static int getData() throws IOException {
-        byte txData[] = new byte[]{0, 0, 0, 0};// Dummy payloads. It's not responsible for anything.
-        byte[] result = spi.write(txData); //Request data from MAX31855 via SPI with dummy pay-load
+        byte txData[] = new byte[]{0, 0, 0, 0};
+        byte[] result = spi.write(txData);
         System.out.printf(String.format("0x%02X%02X ", result[0], result[1]));
-        return ByteBuffer.wrap(result).getInt();
+        return ByteBuffer.wrap(result).getShort();
     }
 
     public static double getConversionValue() throws IOException {
